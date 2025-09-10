@@ -1,0 +1,111 @@
+=============================  Local Class Outline   ===========================================
+
+Class: StaffMember
+Purpose: Represents an employee who logs into and uses the desktop application.
+Attributes:
+staffMemberID: INTEGER (Primary Key)
+fullName: TEXT
+role: TEXT (e.g., 'Cashier', 'StockController')
+PIN: TEXT (Hashed PIN for login)
+
+Class: Item (Complete)
+Purpose: The master record for a single product in the store's inventory.
+Attributes:
+itemID: INTEGER (Primary Key)
+itemName: TEXT
+barcode: TEXT
+sellingPrice: REAL (or DECIMAL)
+stockQuantity: INTEGER
+expiryDate: DATE
+itemSyncStatus: TEXT (e.g., 'synced', 'unsynced')
+
+Class: Sale
+Purpose: Records a single transaction processed at the Point of Sale.
+Attributes:
+saleID: INTEGER (Primary Key)
+staffMemberID: INTEGER (Foreign Key to StaffMember)
+saleTime: DATETIME
+totalAmount: REAL (or DECIMAL)
+
+Class: Sale_Item (Association Class)
+Purpose: The "line items" of a sale, linking a Sale to the specific Items sold.
+Attributes:
+saleID: INTEGER (Foreign Key to Sale)
+itemID: INTEGER (Foreign Key to Item)
+quantitySold: INTEGER
+sellingPriceAtSale: REAL (The price of the item at the time of the sale)
+
+Class: Shift
+Purpose: A detailed log of a staff member's work session for accountability.
+Attributes:
+shiftID: INTEGER (Primary Key)
+staffMemberID: INTEGER (Foreign Key to StaffMember)
+startTime: DATETIME
+endTime: DATETIME
+openingCash: REAL
+closingCash: REAL
+shiftFlag: TEXT (e.g., 'Valid', 'Discrepancy')
+
+Class: InventoryAdjustment
+Purpose: Logs manual changes to inventory levels outside of sales.
+Attributes:
+adjustmentID: INTEGER (Primary Key)
+itemID: INTEGER (Foreign Key to Item)
+staffMemberID: INTEGER (Foreign Key to StaffMember)
+quantityChanged: INTEGER (Can be positive or negative)
+reason: TEXT (e.g., 'Damaged', 'Spoilage', 'Stock Intake')
+adjustmentTime: DATETIME
+
+============================== Relationships Outline  =========================================
+
+StaffMember and Sale: A StaffMember processes many Sales (One-to-Many).
+StaffMember and Shift: A StaffMember does many Shifts (One-to-Many).
+StaffMember and InventoryAdjustment: A StaffMember performs many InventoryAdjustments (One-to-Many).
+Sale and Item (via Sale_Item): A Sale has many Items, and an Item can be in many Sales (Many-to-Many). The Sale_Item table links them.
+Item and InventoryAdjustment: An Item can have many InventoryAdjustments (One-to-Many).
+
+============================  Local Class Methods Outline   ===================================
+
+StaffMember
+Purpose: To manage employee data and handle local authentication.
+Methods:
+login(pin: String): boolean - Verifies a PIN against the stored hash.
+changePin(oldPin: String, newPin: String): boolean - Allows a staff member to change their PIN.
+getRole(): StaffRole - Returns the staff member's role enum.
+
+Item
+Purpose: The master record for a product.
+Methods:
+updateStock(quantityChange: int): void - Increases or decreases the stockQuantity.
+isExpired(): boolean - Checks if the item's expiryDate has passed.
+markAsSynced(): void - Changes the itemSyncStatus to 'synced'.
+needsSync(): boolean - Checks if the itemSyncStatus is 'unsynced'.
+
+Sale
+Purpose: To manage a single POS transaction.
+Methods:
+addItem(item: Item, quantity: int): void - Adds a product to the sale, creating a Sale_Item record and updating the total.
+calculateTotal(): float - Calculates the final totalAmount based on all Sale_Item records.
+finalize(): void - Completes the sale and updates the stock for all items sold.
+printReceipt(): File - Generates a printable receipt file for the transaction.
+
+Sale_Item
+Purpose: Represents a line item in a sale.
+Methods:
+calculateSubtotal(): float - Calculates the subtotal for this line item (quantitySold * sellingPriceAtSale).
+
+Shift
+Purpose: To manage a work session and ensure accountability.
+Methods:
+start(openingCash: float): void - Begins a new shift, recording the start time and opening cash.
+end(closingCash: float): void - Ends the shift, recording the end time and closing cash.
+calculateExpectedCash(): float - Sums the totalAmount of all sales made during the shift.
+validate(): void - Compares closingCash to openingCash + expectedCash and sets the shiftFlag to 'Valid' or 'Discrepancy'.
+getSalesReport(): List<Sale> - Returns a list of all sales processed during the shift.
+
+InventoryAdjustment
+Purpose: A simple data class to log manual inventory changes. It likely won't need complex methods beyond its constructor.
+Methods:
+InventoryAdjustment(item: Item, staffMember: StaffMember, quantity: int, reason: String) - The constructor to create a new adjustment record.
+
+=================================== Development Tips and tricks ==========================================
