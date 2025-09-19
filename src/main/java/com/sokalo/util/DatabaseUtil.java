@@ -68,6 +68,29 @@ public class DatabaseUtil {
 
         // ... (You would add the CREATE TABLE statements for Shift and InventoryAdjustment here too)
 
+        String shiftTable = "CREATE TABLE IF NOT EXISTS Shift ("
+                + "shiftID INTEGER NOT NULL ,"
+                + "staffMemberID INTEGER NOT NULL ,"
+                + "startTime DATETIME NOT NULL ,"
+                + "startStock INT NOT NULL ,"
+                + "endStock INT NOT NULL ,"
+                + "openingCash REAL NOT NULL ,"
+                + "closingCash REAL NOT NULL ,"
+                + "shiftFlag TEXT NOT NULL ,"
+                + "PRIMARY KEY (shiftID) ,"
+                + "FOREIGN KEY (staffMemberID) REFERENCES StaffMember(staffMemberID)";
+
+        String inventoryAdjustmentTable = "CREATE TABLE IF NOT EXISTS InventoryAdjustment ("
+                + "adjustmentID INTEGER NOT NULL ,"
+                + "staffMemberID INTEGER NOT NULL ,"
+                + "itemID INTEGER NOT NULL ,"
+                + "quantityChanged INTEGER NOT NULL ,"
+                + "reason TEXT NOT NULL ,"
+                + "adjustmentTime DATETIME NOT NULL ,"
+                + "PRIMARY KEY (adjustmentID) ,"
+                + "FOREIGN KEY (staffMemberID) REFERENCES StaffMember(staffMemberID),"
+                + "FOREIGN KEY (itemID) REFERENCES Item(itemID)";
+
         try (Connection conn = getConnection();
              Statement stmt = conn.createStatement()) {
             // Create tables
