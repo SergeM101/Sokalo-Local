@@ -3,15 +3,17 @@ package com.sokalo.model;
 // We will create this enum soon
 // import com.sokalo.model.enums.StaffRole;
 
+import com.sokalo.model.enums.StaffRole;
+
 public class StaffMember {
 
     private int staffMemberID;
     private String fullName;
-    private String role; // We'll change this to the StaffRole enum later
+    private StaffRole role; // We'll change this to the StaffRole enum later
     private String PIN;
 
     // A constructor to create new StaffMember objects
-    public StaffMember(int staffMemberID, String fullName, String role, String PIN) {
+    public StaffMember(int staffMemberID, String fullName, StaffRole role, String PIN) {
         this.staffMemberID = staffMemberID;
         this.fullName = fullName;
         this.role = role;
@@ -37,11 +39,11 @@ public class StaffMember {
         this.fullName = fullName;
     }
 
-    public String getRole() {
+    public StaffRole getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(StaffRole role) {
         this.role = role;
     }
 

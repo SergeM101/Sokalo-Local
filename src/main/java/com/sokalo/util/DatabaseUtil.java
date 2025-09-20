@@ -72,13 +72,14 @@ public class DatabaseUtil {
                 + "shiftID INTEGER NOT NULL ,"
                 + "staffMemberID INTEGER NOT NULL ,"
                 + "startTime DATETIME NOT NULL ,"
-                + "startStock INT NOT NULL ,"
-                + "endStock INT NOT NULL ,"
-                + "openingCash REAL NOT NULL ,"
-                + "closingCash REAL NOT NULL ,"
+                + "startStock INT ,"    // nullable for stock controller
+                + "endStock INT ,"      // nullable for stock controller
+                + "openingCash REAL ,"  // nullable for cashier
+                + "closingCash REAL ,"  // nullable for cashier
                 + "shiftFlag TEXT NOT NULL ,"
                 + "PRIMARY KEY (shiftID) ,"
-                + "FOREIGN KEY (staffMemberID) REFERENCES StaffMember(staffMemberID)";
+                + "FOREIGN KEY (staffMemberID) REFERENCES StaffMember(staffMemberID)"
+                + ");";
 
         String inventoryAdjustmentTable = "CREATE TABLE IF NOT EXISTS InventoryAdjustment ("
                 + "adjustmentID INTEGER NOT NULL ,"
@@ -89,7 +90,8 @@ public class DatabaseUtil {
                 + "adjustmentTime DATETIME NOT NULL ,"
                 + "PRIMARY KEY (adjustmentID) ,"
                 + "FOREIGN KEY (staffMemberID) REFERENCES StaffMember(staffMemberID),"
-                + "FOREIGN KEY (itemID) REFERENCES Item(itemID)";
+                + "FOREIGN KEY (itemID) REFERENCES Item(itemID)"
+                + ");";
 
         try (Connection conn = getConnection();
              Statement stmt = conn.createStatement()) {
@@ -98,7 +100,8 @@ public class DatabaseUtil {
             stmt.execute(itemTable);
             stmt.execute(saleTable);
             stmt.execute(saleItemTable);
-            // ... (execute statements for other tables)
+            stmt.execute(shiftTable);
+            stmt.execute(inventoryAdjustmentTable);
             System.out.println("Tables created successfully.");
         } catch (SQLException e) {
             System.out.println(e.getMessage());

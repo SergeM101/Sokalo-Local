@@ -1,0 +1,51 @@
+/* Define your color theme */
+.root {
+    -fx-primary: #2563EB;      /* modern blue */
+    -fx-accent: #22C55E;       /* light green */
+    -fx-dark-bg: #0F172A;      /* dark mode background */
+    -fx-dark-surface: #1E293B; /* dark mode surface/cards */
+    -fx-dark-text: #F1F5F9;    /* dark mode primary text */
+    -fx-dark-muted: #CBD5E1;   /* dark mode secondary text */
+}
+
+/* Apply the theme to the whole app */
+.root {
+    -fx-background-color: -fx-dark-bg;
+    -fx-font-family: "Lato"; /* Use the body font */
+}
+
+/* Style Labels and Text */
+.label {
+    -fx-text-fill: -fx-dark-text;
+    -fx-font-family: "Poppins"; /* Use heading font for titles */
+}
+
+/* Style Buttons */
+.button {
+    -fx-background-color: -fx-primary;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8;
+}
+
+.button:hover {
+    -fx-background-color: derive(-fx-primary, 20%);
+}
+
+/* Style Tables */
+.table-view {
+    -fx-background-color: -fx-dark-surface;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: -fx-dark-bg;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: -fx-dark-muted;
+}
+
+.table-view .table-cell{
+    -fx-text-fill: -fx-dark-text;
+    -fx-border-color: transparent;
+}

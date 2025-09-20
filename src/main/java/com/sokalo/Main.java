@@ -18,20 +18,13 @@ public class Main extends Application {
      */
     @Override
     public void start(Stage stage) throws IOException {
-        // --- 1. Load the FXML file for the login view ---
-        // FXMLLoader loads the user interface layout from an .fxml file.
-        // We need to get the URL of our FXML file, which is in the 'resources' folder.
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("..//view//LoginView.fxml"));
+        // The path must match the folder structure inside your 'resources' directory
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/com/sokalo/view/LoginView.fxml"));
 
-        // --- 2. Create a Scene ---
-        // A Scene is the container for all content in a scene graph.
-        // We create a new scene with the loaded FXML layout, setting its dimensions.
         Scene scene = new Scene(fxmlLoader.load(), 800, 600);
-
-        // --- 3. Configure the Stage (the main window) ---
         stage.setTitle("SOKALO - In-Store Management");
-        stage.setScene(scene); // Set the scene for this stage
-        stage.show(); // Display the window to the user
+        stage.setScene(scene);
+        stage.show();
     }
 
     /**

@@ -1,4 +1,7 @@
 package com.sokalo.model.enums;
 
-public class StaffRole {
+public enum StaffRole {
+    CASHIER,
+    STOCK_CONTROLLER,
+    STORE_MANAGER
 }

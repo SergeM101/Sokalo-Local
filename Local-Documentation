@@ -109,3 +109,6 @@ Methods:
 InventoryAdjustment(item: Item, staffMember: StaffMember, quantity: int, reason: String) - The constructor to create a new adjustment record.
 
 =================================== Development Tips and tricks ==========================================
+A DAO is a class whose only job is to talk to the database.
+This is a very important design pattern because it separates your business logic (in the controllers) from your database code,
+making your application much cleaner and easier to maintain.
