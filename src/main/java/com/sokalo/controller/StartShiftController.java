@@ -3,6 +3,7 @@
 package com.sokalo.controller;
 
 import com.sokalo.Main;
+import com.sokalo.dao.ShiftDAO;
 import com.sokalo.model.StaffMember;
 import com.sokalo.model.enums.StaffRole;
 import javafx.event.ActionEvent;
@@ -24,6 +25,11 @@ public class StartShiftController {
 
     private StaffMember currentUser;
 
+    private ShiftDAO shiftDAO; // <-- 2. Add a DAO instance variable
+
+    public StartShiftController() {
+        this.shiftDAO = new ShiftDAO(); // Initialize it in the constructor
+    }
     /**
      * This method receives the logged-in user and customizes the view.
      */
@@ -50,11 +56,16 @@ public class StartShiftController {
         String openingValue = openingValueField.getText();
         System.out.println("Beginning shift for " + currentUser.getFullName() + " with value: " + openingValue);
 
+        String openingValueStr = openingValueField.getText();
+        if (openingValueStr.isEmpty()) return;
+
         // TO-DO: Create a ShiftDAO to save the new shift record to the database.
         // The DAO will need to check the user's role and save either the cash or stock value.
 
         // After saving, close this window and open the MainView
         try {
+            shiftDAO.startShift(currentUser.getStaffMemberID(), currentUser.getRole(), Double.parseDouble(openingValue));
+
             // Close the current shift window
             Stage currentStage = (Stage) openingValueField.getScene().getWindow();
             currentStage.close();

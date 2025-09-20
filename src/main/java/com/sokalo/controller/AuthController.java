@@ -43,7 +43,6 @@ public class AuthController {
         // TO-DO: Replace this with a real database call to a StaffMemberDAO
 
         StaffMember loggedInUser = staffMemberDAO.findByUsernameAndPin(username, pin);
-        // StaffMember loggedInUser = staffMemberDAO.findByUsernameAndPin(username, pin);
 
         if (loggedInUser != null) {
             try {

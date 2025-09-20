@@ -1,6 +1,6 @@
 // in src/main/java/com/sokalo/util/ReceiptPrinter.java
 
-package com.sokalo.util;
+package com.sokalo.services;
 
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;

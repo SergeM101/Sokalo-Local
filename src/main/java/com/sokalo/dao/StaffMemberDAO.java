@@ -94,4 +94,19 @@ public class StaffMemberDAO {
     }
 
     // public void updateStaffMember(StaffMember staffMember) { ... }
+
+    // Delete staff member
+    public void deleteStaffMember(int staffMemberId) {
+        String sql = "DELETE FROM StaffMember WHERE staffMemberID = ?";
+
+        try (Connection conn = DatabaseUtil.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, staffMemberId);
+            pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 }

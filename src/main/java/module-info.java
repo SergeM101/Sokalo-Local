@@ -6,7 +6,10 @@ module com.sokalo {
     requires com.dlsc.formsfx;
     requires net.synedra.validatorfx;
     requires org.kordamp.bootstrapfx.core;
-    requires java.sql;  // For sqlite
+    requires java.sql;
+    requires java.desktop;
+    requires layout;
+    requires kernel;  // For sqlite
 
     opens com.sokalo.controller to javafx.fxml;
 

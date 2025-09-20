@@ -4,11 +4,14 @@ package com.sokalo.controller;
 
 import com.sokalo.model.StaffMember;
 import com.sokalo.model.enums.StaffRole;
+import com.sokalo.util.FXMLViewLoader;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+
+import java.io.IOException;
 
 public class MainController {
 
@@ -83,8 +86,23 @@ public class MainController {
     @FXML
     void handleInventoryClick(ActionEvent event) {
         System.out.println("Inventory button clicked by: " + currentUser.getFullName());
-    }
 
+        // 2. Load the InventoryView.fxml into the center of the BorderPane
+        try {
+            Pane view = FXMLViewLoader.getPage("InventoryView.fxml");
+            mainPane.setCenter(view);
+
+            // This is an advanced step for later:
+            // You might need to get the controller to pass data to it, like this:
+            // FXMLLoader loader = new FXMLLoader(...)
+            // Pane view = loader.load();
+            // InventoryController controller = loader.getController();
+            // controller.initData(currentUser);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     @FXML
     void handlePOSClick(ActionEvent event) {
         System.out.println("POS button clicked by: " + currentUser.getFullName());
