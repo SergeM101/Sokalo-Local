@@ -1,14 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.sokalo.controller.ShiftsController"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.sokalo.controller.ShiftsController">
+   <children>
+      <VBox alignment="CENTER" layoutX="8.0" layoutY="22.0" prefHeight="339.0" prefWidth="582.0">
+         <children>
+            <Button fx:id="printShiftsButton" mnemonicParsing="false" onAction="#handleShiftsReport" text="Print Report" />
+            <TabPane prefHeight="259.0" prefWidth="582.0" tabClosingPolicy="UNAVAILABLE">
+              <tabs>
+                <Tab text="Cashier Shifts">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <TableView fx:id="cashierShiftsTableView" layoutX="11.0" layoutY="15.0" prefHeight="200.0" prefWidth="559.0">
+                                 <columns>
+                                    <TableColumn fx:id="cashShiftIdCol" prefWidth="48.6666259765625" text="Shift ID" />
+                                    <TableColumn fx:id="cashStaffNameCol" prefWidth="95.99996948242188" text="Cashier" />
+                                    <TableColumn fx:id="cashStartTimeCol" prefWidth="82.00003051757812" text="Starting Time" />
+                                    <TableColumn fx:id="cashCloseTimeCol" prefWidth="96.66668701171875" text="Closing Time" />
+                                    <TableColumn fx:id="openingCashCol" prefWidth="84.0" text="Opening Cash" />
+                                    <TableColumn fx:id="closingCashCol" prefWidth="80.66668701171875" text="Closing Cash" />
+                                    <TableColumn fx:id="cashFlagCol" prefWidth="70.66668701171875" text="Status" />
+                                 </columns>
+                              </TableView>
+                           </children>
+                        </AnchorPane>
+                  </content>
+                </Tab>
+                <Tab text="Stock Controller Shifts">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <TableView fx:id="stockShiftsTableView" layoutX="9.0" layoutY="15.0" prefHeight="200.0" prefWidth="556.0">
+                                 <columns>
+                                    <TableColumn fx:id="stockShiftIdCol" prefWidth="51.33331298828125" text="Shift ID" />
+                                    <TableColumn fx:id="stockStaffNameCol" prefWidth="112.66668701171875" text="Stock Controller" />
+                                    <TableColumn fx:id="stockStartTimeCol" prefWidth="84.66665649414062" text="Starting Time" />
+                                    <TableColumn fx:id="stockCloseTimeCol" prefWidth="80.66668701171875" text="Closing Time" />
+                                    <TableColumn fx:id="startStockCol" prefWidth="72.0" text="Start Stock" />
+                                    <TableColumn fx:id="endStockCol" prefWidth="84.66668701171875" text="End Stock" />
+                                    <TableColumn fx:id="stockFlagCol" prefWidth="74.0" text="Status" />
+                                 </columns>
+                              </TableView>
+                           </children>
+                        </AnchorPane>
+                  </content>
+                </Tab>
+              </tabs>
+            </TabPane>
+         </children>
+      </VBox>
+   </children>
 </AnchorPane>

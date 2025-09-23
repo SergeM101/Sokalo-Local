@@ -1,14 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="$CONTROLLER_NAME$"
-            prefHeight="400.0" prefWidth="600.0" >
 
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.sokalo.controller.AboutUsController">
+   <children>
+      <VBox alignment="CENTER" layoutX="61.0" layoutY="63.0" prefHeight="284.0" prefWidth="454.0">
+         <children>
+            <Label text="SOKALO LOCAL">
+               <textFill>
+                  <LinearGradient endX="1.0" endY="0.36277600116910247" startY="0.6151419197347262">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="0.017977042123675346" green="0.1363258957862854" blue="0.7280701994895935" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="0.008771929889917374" green="0.9473684430122375" blue="0.2434210479259491" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </textFill>
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label text="SOKALO Desktop is the offline-first application built for stores to efficiently manage their daily operations without relying on constant internet access. It provides powerful tools for inventory tracking, sales processing (POS), staff accountability, and shift reconciliation. Data is stored locally and securely, with the option to sync to the SOKALO online platform whenever internet connectivity is available.
+
+By combining simplicity with reliability, SOKALO Desktop ensures businesses can run smoothly in any environment. It empowers store managers to stay in control of stock, prevent losses, and monitor performance, while still being seamlessly connected to the wider SOKALO ecosystem when needed.">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+   </children>
 </AnchorPane>

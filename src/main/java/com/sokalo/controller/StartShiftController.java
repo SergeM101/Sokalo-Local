@@ -60,7 +60,19 @@ public class StartShiftController {
         if (openingValueStr.isEmpty()) return;
 
         // TO-DO: Create a ShiftDAO to save the new shift record to the database.
+        double openingValueDouble = Double.parseDouble(openingValueStr);
+        shiftDAO.startShift(currentUser.getStaffMemberID(), currentUser.getRole(), openingValueDouble);
+
         // The DAO will need to check the user's role and save either the cash or stock value.
+        if (currentUser.getRole() == StaffRole.CASHIER) {
+            System.out.println("Cashier opening value: " + openingValueDouble);
+        } else if (currentUser.getRole() == StaffRole.STOCK_CONTROLLER) {
+            System.out.println("Stock controller opening value: " + openingValueDouble);
+        } else {
+            System.out.println("Error: Invalid role.");
+            return;
+        }
+
 
         // After saving, close this window and open the MainView
         try {

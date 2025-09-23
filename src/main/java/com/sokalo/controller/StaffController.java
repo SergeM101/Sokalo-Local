@@ -3,6 +3,7 @@ package com.sokalo.controller;
 
 import com.sokalo.Main;
 import com.sokalo.dao.StaffMemberDAO;
+import com.sokalo.dao.SystemLogDAO;
 import com.sokalo.model.StaffMember;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -37,9 +38,12 @@ public class StaffController {
     // A list to hold the data for the table
     private ObservableList<StaffMember> staffList = FXCollections.observableArrayList();
     private StaffMemberDAO staffMemberDAO;
+    private StaffMember currentUser;
+    private final SystemLogDAO systemLogDAO = new SystemLogDAO();
 
     public StaffController() {
         this.staffMemberDAO = new StaffMemberDAO(); // Create an instance of the DAO
+        this.systemLogDAO.addLog(currentUser.getStaffMemberID(), "STAFF_CONTROLLER_INIT", "StaffController initialized.");
     }
 
     /**
@@ -65,6 +69,9 @@ public class StaffController {
                             // Get the StaffMember object from the current row
                             StaffMember staffMember = getTableView().getItems().get(getIndex());
                             System.out.println("Deleting staff: " + staffMember.getFullName());
+                            // Log the action BEFORE deleting
+                            String details = "Store Manager deleted staff member: " + staffMember.getFullName() + " (ID: " + staffMember.getStaffMemberID() + ")";
+                            systemLogDAO.addLog(currentUser.getStaffMemberID(), "DELETE_STAFF", details);
 
                             // Call the DAO to delete it from the database
                             staffMemberDAO.deleteStaffMember(staffMember.getStaffMemberID());
@@ -105,7 +112,7 @@ public class StaffController {
         try {
             FXMLLoader loader = new FXMLLoader(Main.class.getResource("/com/sokalo/view/AddStaffDialog.fxml"));
             Stage dialogStage = new Stage();
-            dialogStage.setTitle("Add New Staff Member");
+
             // This makes the dialog block the main window until it's closed
             dialogStage.initModality(Modality.WINDOW_MODAL);
             dialogStage.setScene(new Scene(loader.load()));

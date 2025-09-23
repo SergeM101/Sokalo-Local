@@ -109,4 +109,22 @@ public class StaffMemberDAO {
             System.out.println(e.getMessage());
         }
     }
+
+    /**
+     * Counts the total number of staff members in the database.
+     * @return The total staff count.
+     */
+    public int getActiveStaffCount() {
+        String sql = "SELECT COUNT(*) FROM StaffMember";
+        try (Connection conn = DatabaseUtil.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
 }

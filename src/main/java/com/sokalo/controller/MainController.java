@@ -2,40 +2,39 @@
 
 package com.sokalo.controller;
 
+import com.sokalo.Main;
+import com.sokalo.dao.ShiftDAO; // <-- ADD THIS IMPORT
+import com.sokalo.model.Shift;
 import com.sokalo.model.StaffMember;
 import com.sokalo.model.enums.StaffRole;
 import com.sokalo.util.FXMLViewLoader;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;     // <-- ADD THIS IMPORT
+import javafx.scene.Scene;         // <-- ADD THIS IMPORT
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.Modality;      // <-- ADD THIS IMPORT
+import javafx.stage.Stage;         // <-- ADD THIS IMPORT
 
 import java.io.IOException;
 
 public class MainController {
 
-    @FXML
-    private BorderPane mainPane;
-
-    // Link all your sidebar buttons from the FXML to these variables
-    @FXML private Button dashboardButton;
-    @FXML private Button posButton;
-    @FXML private Button inventoryButton;
-    @FXML private Button staffButton;
-    @FXML private Button shiftsButton;
-    @FXML private Button adjustmentsButton;
-    @FXML private Button endShiftButton;
+    @FXML private BorderPane mainPane;
+    @FXML private Button dashboardButton, posButton, inventoryButton, staffButton, shiftsButton, adjustmentsButton, aboutUsButton, endShiftButton;
 
     private StaffMember currentUser;
+    private final ShiftDAO shiftDAO = new ShiftDAO(); // <-- ADD THIS DAO INSTANCE
 
-    /**
-     * This special method is called by the AuthController after login.
-     * It receives the logged-in user and configures the UI for their role.
-     */
     public void initData(StaffMember staffMember) {
         this.currentUser = staffMember;
+        setupSidebar();
+        handleDashboardClick(null);
+    }
 
+    private void setupSidebar() {
         // Hide all buttons by default
         dashboardButton.setVisible(false);
         posButton.setVisible(false);
@@ -43,21 +42,23 @@ public class MainController {
         staffButton.setVisible(false);
         shiftsButton.setVisible(false);
         adjustmentsButton.setVisible(false);
+        aboutUsButton.setVisible(false);
         endShiftButton.setVisible(false);
 
-        // --- THE FIX IS HERE ---
-        // Switch on the StaffRole enum directly
+        // Show buttons based on role
         switch (currentUser.getRole()) {
             case CASHIER:
                 dashboardButton.setVisible(true);
                 posButton.setVisible(true);
                 inventoryButton.setVisible(true);
+                aboutUsButton.setVisible(true);
                 endShiftButton.setVisible(true);
                 endShiftButton.setText("End Shift");
                 break;
             case STOCK_CONTROLLER:
                 dashboardButton.setVisible(true);
                 inventoryButton.setVisible(true);
+                staffButton.setVisible(true);
                 endShiftButton.setVisible(true);
                 endShiftButton.setText("End Shift");
                 break;
@@ -67,64 +68,108 @@ public class MainController {
                 shiftsButton.setVisible(true);
                 adjustmentsButton.setVisible(true);
                 inventoryButton.setVisible(true);
+                aboutUsButton.setVisible(true);
                 endShiftButton.setVisible(true);
                 endShiftButton.setText("Logout");
                 break;
         }
-    }
+    } // <-- THE SETUP METHOD ENDS HERE
 
-
-    // --- Event Handlers ---
-    // These are the methods linked to your buttons' "On Action" property.
+    // --- All other methods are now OUTSIDE setupSidebar() ---
 
     @FXML
     void handleDashboardClick(ActionEvent event) {
-        System.out.println("Dashboard button clicked by: " + currentUser.getFullName());
-        // Here you would load the DashboardView.fxml
+        loadView("DashboardView.fxml");
     }
 
     @FXML
     void handleInventoryClick(ActionEvent event) {
-        System.out.println("Inventory button clicked by: " + currentUser.getFullName());
-
-        // 2. Load the InventoryView.fxml into the center of the BorderPane
-        try {
-            Pane view = FXMLViewLoader.getPage("InventoryView.fxml");
-            mainPane.setCenter(view);
-
-            // This is an advanced step for later:
-            // You might need to get the controller to pass data to it, like this:
-            // FXMLLoader loader = new FXMLLoader(...)
-            // Pane view = loader.load();
-            // InventoryController controller = loader.getController();
-            // controller.initData(currentUser);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        loadView("InventoryView.fxml", true);
     }
+
     @FXML
     void handlePOSClick(ActionEvent event) {
-        System.out.println("POS button clicked by: " + currentUser.getFullName());
+        loadView("POSView.fxml");
     }
 
     @FXML
     void handleStaffClick(ActionEvent event) {
-        System.out.println("Staff button clicked by: " + currentUser.getFullName());
+        loadView("StaffView.fxml");
     }
 
     @FXML
     void handleShiftsClick(ActionEvent event) {
-        System.out.println("Shifts button clicked by: " + currentUser.getFullName());
+        loadView("ShiftsView.fxml");
     }
 
     @FXML
     void handleAdjustmentsClick(ActionEvent event) {
-        System.out.println("Adjustments button clicked by: " + currentUser.getFullName());
+        loadView("AdjustmentsLogView.fxml");
     }
+
+    @FXML void handleAboutUsClick(ActionEvent event) { loadView("AboutUsView.fxml");}
 
     @FXML
     void handleEndShiftClick(ActionEvent event) {
-        System.out.println("End Shift/Logout button clicked by: " + currentUser.getFullName());
+        if (currentUser.getRole() == StaffRole.STORE_MANAGER) {
+            closeAndReturnToLogin();
+        } else {
+            try {
+                Shift activeShift = shiftDAO.findActiveShiftForUser(currentUser.getStaffMemberID());
+                if (activeShift == null) {
+                    System.out.println("Error: No active shift found for this user.");
+                    return;
+                }
+
+                FXMLLoader loader = new FXMLLoader(Main.class.getResource("/com/sokalo/view/EndShiftView.fxml"));
+                Stage dialogStage = new Stage();
+                dialogStage.setTitle("End Shift");
+                dialogStage.initModality(Modality.WINDOW_MODAL);
+                dialogStage.setScene(new Scene(loader.load()));
+
+                EndShiftController controller = loader.getController();
+                controller.initData(currentUser, activeShift);
+
+                dialogStage.showAndWait();
+                closeAndReturnToLogin();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void loadView(String fxmlFile) {
+        loadView(fxmlFile, false);
+    }
+
+    private void loadView(String fxmlFile, boolean needsUserData) {
+        try {
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource("/com/sokalo/view/" + fxmlFile));
+            Pane view = loader.load();
+            if (needsUserData) {
+                Object controller = loader.getController();
+                if (controller instanceof InventoryController) {
+                    ((InventoryController) controller).initData(currentUser);
+                }
+            }
+            mainPane.setCenter(view);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void closeAndReturnToLogin() {
+        try {
+            Stage currentStage = (Stage) mainPane.getScene().getWindow();
+            currentStage.close();
+
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource("/com/sokalo/view/LoginView.fxml"));
+            Stage loginStage = new Stage();
+            loginStage.setTitle("SOKALO - Staff Login");
+            loginStage.setScene(new Scene(loader.load()));
+            loginStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

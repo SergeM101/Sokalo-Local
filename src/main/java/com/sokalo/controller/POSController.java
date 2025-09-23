@@ -4,8 +4,10 @@ package com.sokalo.controller;
 
 import com.sokalo.dao.ItemDAO;
 import com.sokalo.dao.SaleDAO;
+import com.sokalo.dao.SystemLogDAO;
 import com.sokalo.model.Item;
 import com.sokalo.model.Sale;
+import com.sokalo.model.StaffMember;
 import com.sokalo.services.ReceiptPrinter;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -31,6 +33,8 @@ public class POSController {
 
     private final ItemDAO itemDAO = new ItemDAO();
     private final SaleDAO saleDAO = new SaleDAO();
+    private final SystemLogDAO systemLogDAO = new SystemLogDAO();
+    private StaffMember currentUser; // Assume this is passed in
     private ObservableList<SaleItemWrapper> currentSaleItems = FXCollections.observableArrayList();
 
     @FXML
@@ -85,6 +89,9 @@ public class POSController {
             for (SaleItemWrapper wrapper : currentSaleItems) {
                 itemDAO.updateStockQuantity(wrapper.getItemID(), wrapper.getQuantitySold());
             }
+            // Log the sale
+            String details = "Sale finalized by " + currentUser.getFullName() + ". Total: " + newSale.getTotalAmount() + " FCFA.";
+            systemLogDAO.addLog(currentUser.getStaffMemberID(), "FINALIZE_SALE", details);
 
             ReceiptPrinter.printReceipt(newSale, currentSaleItems);
 

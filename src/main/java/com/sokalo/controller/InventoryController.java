@@ -4,6 +4,7 @@ package com.sokalo.controller;
 
 import com.sokalo.Main;
 import com.sokalo.dao.ItemDAO;
+import com.sokalo.dao.SystemLogDAO;
 import com.sokalo.model.Item;
 import com.sokalo.model.StaffMember;
 import com.sokalo.model.enums.StaffRole;
@@ -43,6 +44,7 @@ public class InventoryController {
     private ItemDAO itemDAO;
     private ObservableList<Item> itemList = FXCollections.observableArrayList();
     private StaffMember currentUser; // To store the logged-in user
+    private final SystemLogDAO systemLogDAO = new SystemLogDAO();
 
     public InventoryController() {
         this.itemDAO = new ItemDAO();
@@ -75,11 +77,23 @@ public class InventoryController {
                     private final Button btn = new Button("Delete");
                     {
                         btn.setOnAction((ActionEvent event) -> {
-                            Item item = getTableView().getItems().get(getIndex());
-                            System.out.println("Deleting item: " + item.getItemName());
-                            // TO-DO: Add a confirmation dialog and "reason for delete" input here
-                            itemDAO.deleteItem(item.getItemID());
-                            loadItemData(); // Refresh the table
+                            Item itemToDelete = getTableView().getItems().get(getIndex());
+
+                            try {
+                                FXMLLoader loader = new FXMLLoader(Main.class.getResource("/com/sokalo/view/DeleteItemDialog.fxml"));
+                                Stage dialogStage = new Stage();
+                                dialogStage.setTitle("Confirm Deletion");
+                                dialogStage.initModality(Modality.WINDOW_MODAL);
+                                dialogStage.setScene(new Scene(loader.load()));
+
+                                // Get the controller and pass the data to it
+                                DeleteItemDialogController controller = loader.getController();
+                                controller.initData(itemToDelete, InventoryController.this); // Pass the item and this controller
+
+                                dialogStage.showAndWait();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                         });
                     }
 

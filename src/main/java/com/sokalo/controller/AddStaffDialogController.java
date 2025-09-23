@@ -2,6 +2,7 @@
 package com.sokalo.controller;
 
 import com.sokalo.dao.StaffMemberDAO;
+import com.sokalo.dao.SystemLogDAO;
 import com.sokalo.model.StaffMember;
 import com.sokalo.model.enums.StaffRole;
 import javafx.collections.FXCollections;
@@ -22,6 +23,9 @@ public class AddStaffDialogController {
 
     private StaffMemberDAO staffMemberDAO;
     private StaffController staffController; // To refresh the table after adding
+    private StaffMember currentUser;
+    private final SystemLogDAO systemLogDAO = new SystemLogDAO();
+    private Stage dialogStage;
 
     public AddStaffDialogController() {
         this.staffMemberDAO = new StaffMemberDAO();
@@ -53,6 +57,10 @@ public class AddStaffDialogController {
         // Create a new StaffMember object (ID is 0 because it will be auto-generated)
         StaffMember newStaff = new StaffMember(0, name, role, pin);
         staffMemberDAO.addStaffMember(newStaff);
+        System.out.println("Staff added successfully.");
+
+        systemLogDAO.addLog(currentUser.getStaffMemberID(), "CREATE_STAFF", "Store Manager added a new staff member.");
+        dialogStage.setTitle("Add New Staff Member");
 
         // Refresh the main staff table
         staffController.loadStaffData();

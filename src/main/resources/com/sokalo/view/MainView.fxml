@@ -11,12 +11,13 @@
          <left>
             <VBox prefHeight="400.0" prefWidth="127.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button fx:id="dasboardButton" mnemonicParsing="false" onAction="#handleDashboardClick" text="Dashboard" />
+                  <Button fx:id="dashboardButton" mnemonicParsing="false" onAction="#handleDashboardClick" text="Dashboard" />
                   <Button fx:id="posButton" mnemonicParsing="false" onAction="#handlePOSClick" text="POS" />
                   <Button fx:id="inventoryButton" mnemonicParsing="false" onAction="#handleInventoryClick" text="Inventory" />
                   <Button fx:id="staffButton" mnemonicParsing="false" onAction="#handleStaffClick" text="Staff" />
                   <Button fx:id="shiftsButton" mnemonicParsing="false" onAction="#handleShiftsClick" text="Shifts" />
                   <Button fx:id="adjustmentsButton" mnemonicParsing="false" onAction="#handleAdjustmentsClick" text="Adjustments Log" />
+                  <Button fx:id="aboutUsButton" mnemonicParsing="false" onAction="#handleAboutUsClick" text="About Us" />
                   <Button fx:id="endShiftButton" mnemonicParsing="false" onAction="#handleEndShiftClick" text="End/End Shift" />
                </children>
             </VBox>

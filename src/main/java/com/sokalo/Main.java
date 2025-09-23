@@ -19,10 +19,10 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         // The path must match the folder structure inside your 'resources' directory
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/com/sokalo/view/LoginView.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/com/sokalo/view/SplashView.fxml"));
 
-        Scene scene = new Scene(fxmlLoader.load(), 800, 600);
-        stage.setTitle("SOKALO - In-Store Management");
+        Scene scene = new Scene(fxmlLoader.load());
+        stage.setTitle("SOKALO"); // A simple title for the splash
         stage.setScene(scene);
         stage.show();
     }

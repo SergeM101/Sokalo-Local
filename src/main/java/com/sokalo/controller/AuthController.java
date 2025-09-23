@@ -4,6 +4,7 @@ import com.sokalo.Main;
 import com.sokalo.dao.StaffMemberDAO;
 import com.sokalo.model.StaffMember;
 import com.sokalo.model.enums.StaffRole;
+import com.sokalo.dao.SystemLogDAO;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -13,6 +14,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class AuthController {
+
 
     @FXML
     private TextField usernameField;
@@ -24,10 +26,12 @@ public class AuthController {
     private Label statusLabel;
 
     private StaffMemberDAO staffMemberDAO;
+    private SystemLogDAO systemLogDAO;
 
     // A constructor to initialize the DAO
     public AuthController() {
         this.staffMemberDAO = new StaffMemberDAO();
+        this.systemLogDAO = new SystemLogDAO();
     }
 
     /**
@@ -40,11 +44,12 @@ public class AuthController {
         String username = usernameField.getText();
         String pin = pinField.getText();
 
-        // TO-DO: Replace this with a real database call to a StaffMemberDAO
-
+        // To call user attributes for authentication
         StaffMember loggedInUser = staffMemberDAO.findByUsernameAndPin(username, pin);
 
         if (loggedInUser != null) {
+            String details = "User '" + loggedInUser.getFullName() + "' logged in successfully.";
+            systemLogDAO.addLog(loggedInUser.getStaffMemberID(), "USER_LOGIN", details);
             try {
                 // Close the current login window first
                 Stage currentStage = (Stage) pinField.getScene().getWindow();
@@ -53,11 +58,14 @@ public class AuthController {
                 // Check the user's role and load the appropriate next screen
                 if (loggedInUser.getRole() == StaffRole.STORE_MANAGER) {
                     loadMainView(loggedInUser);
+
                 } else {
                     loadStartShiftView(loggedInUser);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
+                statusLabel.setText("Error: " + e.getMessage());
+                systemLogDAO.addLog(loggedInUser.getStaffMemberID(), "USER_LOGIN", "Failed to load next screen.");
                 // In a real app, you would show an error dialog here
             }
         } else {
