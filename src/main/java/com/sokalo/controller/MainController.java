@@ -150,7 +150,13 @@ public class MainController {
                 Object controller = loader.getController();
                 if (controller instanceof InventoryController) {
                     ((InventoryController) controller).initData(currentUser);
+                }// --- ADD THIS ELSE IF BLOCK ---
+
+ /*               else if (controller instanceof StaffController) {
+                    ((StaffController) controller).initData(currentUser);
                 }
+
+  */
             }
             mainPane.setCenter(view);
         } catch (IOException e) {

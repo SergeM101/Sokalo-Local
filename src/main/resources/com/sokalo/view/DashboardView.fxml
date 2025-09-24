@@ -1,90 +1,89 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="527.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.sokalo.controller.DashboardController">
+<StackPane xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.sokalo.controller.DashboardController"
+            stylesheets="@style.css"
+            styleClass="root">
+   <padding>
+       <Insets top="16" right="16" bottom="16" left="16"/>
+   </padding>
    <children>
-      <VBox alignment="CENTER" layoutX="9.0" layoutY="9.0" prefHeight="503.0" prefWidth="583.0">
+      <VBox spacing="16.0" VBox.vgrow="ALWAYS">
          <children>
-            <Label text="Store Dashboard">
+            <Label text="Store Dashboard" style="-fx-text-fill: -fx-dark-text; -fx-font-size: 20px; -fx-font-weight: bold;">
                <font>
-                  <Font name="System Bold" size="18.0" />
+                  <Font size="20.0" />
                </font>
             </Label>
-            <GridPane prefHeight="128.0" prefWidth="568.0">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="279.3333740234375" minWidth="10.0" prefWidth="179.33336385091147" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="411.9999694824219" minWidth="10.0" prefWidth="209.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="411.9999694824219" minWidth="10.0" prefWidth="219.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
+            <GridPane hgap="12.0" vgap="12.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" percentWidth="33" />
+                  <ColumnConstraints hgrow="SOMETIMES" percentWidth="34" />
+                  <ColumnConstraints hgrow="SOMETIMES" percentWidth="33" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints vgrow="SOMETIMES" />
+               </rowConstraints>
                <children>
-                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" styleClass="card">
+                  <VBox alignment="CENTER" style="-fx-background-color: -fx-dark-surface; -fx-background-radius: 12; -fx-padding: 16; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.35), 12, 0.2, 0, 6);">
                      <children>
-                        <Label fx:id="card1Title" text="Label">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="card1Value" text="Label" />
+                        <Label fx:id="card1Title" text="Label" style="-fx-text-fill: -fx-dark-muted; -fx-font-size: 14px;" />
+                        <Label fx:id="card1Value" text="Label" style="-fx-text-fill: -fx-dark-text; -fx-font-size: 18px; -fx-font-weight: bold;" />
                      </children>
                   </VBox>
-                  <VBox alignment="CENTER" prefHeight="95.0" prefWidth="197.0" styleClass="card" GridPane.columnIndex="1">
+                  <VBox alignment="CENTER" GridPane.columnIndex="1" style="-fx-background-color: -fx-dark-surface; -fx-background-radius: 12; -fx-padding: 16; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.35), 12, 0.2, 0, 6);">
                      <children>
-                        <Label fx:id="card2Title" text="Label">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="card2Value" text="Label" />
+                        <Label fx:id="card2Title" text="Label" style="-fx-text-fill: -fx-dark-muted; -fx-font-size: 14px;" />
+                        <Label fx:id="card2Value" text="Label" style="-fx-text-fill: -fx-dark-text; -fx-font-size: 18px; -fx-font-weight: bold;" />
                      </children>
                   </VBox>
-                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" styleClass="card" GridPane.columnIndex="2">
+                  <VBox alignment="CENTER" GridPane.columnIndex="2" style="-fx-background-color: -fx-dark-surface; -fx-background-radius: 12; -fx-padding: 16; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.35), 12, 0.2, 0, 6);">
                      <children>
-                        <Label fx:id="card3Title" text="Label">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="card3Value" text="Label" />
+                        <Label fx:id="card3Title" text="Label" style="-fx-text-fill: -fx-dark-muted; -fx-font-size: 14px;" />
+                        <Label fx:id="card3Value" text="Label" style="-fx-text-fill: -fx-dark-text; -fx-font-size: 18px; -fx-font-weight: bold;" />
                      </children>
                   </VBox>
                </children>
             </GridPane>
-            <VBox fx:id="chartContainer" prefHeight="298.0" prefWidth="583.0">
+            <VBox fx:id="chartContainer" spacing="12.0" VBox.vgrow="ALWAYS"
+                  style="-fx-background-color: -fx-dark-surface; -fx-background-radius: 12; -fx-padding: 12; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.35), 12, 0.2, 0, 6);">
                <children>
-                  <LineChart prefHeight="128.0" prefWidth="583.0">
-                    <xAxis>
-                      <CategoryAxis side="BOTTOM" />
-                    </xAxis>
-                    <yAxis>
-                      <NumberAxis side="LEFT" />
-                    </yAxis>
+                  <LineChart VBox.vgrow="ALWAYS">
+                     <xAxis>
+                        <CategoryAxis side="BOTTOM" />
+                     </xAxis>
+                     <yAxis>
+                        <NumberAxis side="LEFT" />
+                     </yAxis>
                   </LineChart>
-                  <BarChart>
-                    <xAxis>
-                      <CategoryAxis side="BOTTOM" />
-                    </xAxis>
-                    <yAxis>
-                      <NumberAxis side="LEFT" />
-                    </yAxis>
+                  <BarChart VBox.vgrow="ALWAYS">
+                     <xAxis>
+                        <CategoryAxis side="BOTTOM" />
+                     </xAxis>
+                     <yAxis>
+                        <NumberAxis side="LEFT" />
+                     </yAxis>
                   </BarChart>
                </children>
             </VBox>
          </children>
       </VBox>
    </children>
-</AnchorPane>
+</StackPane>

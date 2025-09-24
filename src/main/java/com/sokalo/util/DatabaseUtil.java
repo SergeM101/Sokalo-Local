@@ -73,7 +73,7 @@ public class DatabaseUtil {
                 + "endStock INT ,"      // nullable for stock controller
                 + "openingCash REAL ,"  // nullable for cashier
                 + "closingCash REAL ,"  // nullable for cashier
-                + "shiftFlag TEXT NOT NULL ,"
+                + "shiftFlag TEXT NOT NULL DEFAULT 'ACTIVE' ,"
                 + "PRIMARY KEY (shiftID) ,"
                 + "FOREIGN KEY (staffMemberID) REFERENCES StaffMember(staffMemberID)"
                 + ");";

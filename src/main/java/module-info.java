@@ -12,6 +12,7 @@ module com.sokalo {
     requires kernel;  // For sqlite
 
     opens com.sokalo.controller to javafx.fxml;
+    opens com.sokalo.model to javafx.base;
 
     exports com.sokalo;     // grants access from the main class
     exports com.sokalo.controller;  // exports controllers

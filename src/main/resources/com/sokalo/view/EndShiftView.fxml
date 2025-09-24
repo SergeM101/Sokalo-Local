@@ -1,21 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.sokalo.controller.EndShiftController">
-   <children>
-      <VBox alignment="CENTER" layoutX="94.0" layoutY="43.0" prefHeight="319.0" prefWidth="425.0">
-         <children>
-            <Label fx:id="titleLabel" text="Label" />
-            <Label fx:id="valueLabel" text="Label" />
-            <TextField fx:id="closingValueField" />
-            <Button fx:id="finalizeShiftButton" mnemonicParsing="false" onAction="#handleFinalizeShiftAction" text="Finalize Shift" />
-         </children>
-      </VBox>
-   </children>
-</AnchorPane>
+<StackPane xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" 
+         fx:controller="com.sokalo.controller.EndShiftController"
+         stylesheets="@style.css">
+    <children>
+        <VBox alignment="CENTER" spacing="16" maxWidth="400">
+            <padding>
+                <Insets top="32" right="32" bottom="32" left="32"/>
+            </padding>
+            <VBox spacing="16" style="-fx-background-color: -fx-dark-surface; -fx-background-radius: 12; -fx-padding: 24;">
+                <children>
+                    <Label fx:id="titleLabel" style="-fx-font-size: 20; -fx-font-weight: bold;"/>
+                    <Label fx:id="valueLabel" style="-fx-font-size: 16;"/>
+                    <TextField fx:id="closingValueField" promptText="Enter closing amount"/>
+                    <Button fx:id="finalizeShiftButton" mnemonicParsing="false" onAction="#handleFinalizeShiftAction" text="Finalize Shift" maxWidth="Infinity"/>
+                </children>
+            </VBox>
+        </VBox>
+    </children>
+</StackPane>

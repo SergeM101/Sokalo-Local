@@ -32,10 +32,10 @@ public class Main extends Application {
      * It calls createTables() to set up the database and then launches the JavaFX application.
      */
     public static void main(String[] args) {
-        // Create the database tables if they don't exist
-        DatabaseUtil.createTables();
+        DatabaseUtil.createTables(); // Creates tables if they don't exist
+        DatabaseUtil.seedDatabase();  // <-- Seeds the database with some sample data
 
-        // Launch the JavaFX application
-        launch();
+        launch(); // Launches the JavaFX application
     }
+
 }

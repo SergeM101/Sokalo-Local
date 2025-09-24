@@ -1,61 +1,78 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.sokalo.controller.ShiftsController">
-   <children>
-      <VBox alignment="CENTER" layoutX="8.0" layoutY="22.0" prefHeight="339.0" prefWidth="582.0">
-         <children>
-            <Button fx:id="printShiftsButton" mnemonicParsing="false" onAction="#handleShiftsReport" text="Print Report" />
-            <TabPane prefHeight="259.0" prefWidth="582.0" tabClosingPolicy="UNAVAILABLE">
-              <tabs>
-                <Tab text="Cashier Shifts">
-                  <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                           <children>
-                              <TableView fx:id="cashierShiftsTableView" layoutX="11.0" layoutY="15.0" prefHeight="200.0" prefWidth="559.0">
-                                 <columns>
-                                    <TableColumn fx:id="cashShiftIdCol" prefWidth="48.6666259765625" text="Shift ID" />
-                                    <TableColumn fx:id="cashStaffNameCol" prefWidth="95.99996948242188" text="Cashier" />
-                                    <TableColumn fx:id="cashStartTimeCol" prefWidth="82.00003051757812" text="Starting Time" />
-                                    <TableColumn fx:id="cashCloseTimeCol" prefWidth="96.66668701171875" text="Closing Time" />
-                                    <TableColumn fx:id="openingCashCol" prefWidth="84.0" text="Opening Cash" />
-                                    <TableColumn fx:id="closingCashCol" prefWidth="80.66668701171875" text="Closing Cash" />
-                                    <TableColumn fx:id="cashFlagCol" prefWidth="70.66668701171875" text="Status" />
-                                 </columns>
-                              </TableView>
-                           </children>
-                        </AnchorPane>
-                  </content>
-                </Tab>
-                <Tab text="Stock Controller Shifts">
-                  <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                           <children>
-                              <TableView fx:id="stockShiftsTableView" layoutX="9.0" layoutY="15.0" prefHeight="200.0" prefWidth="556.0">
-                                 <columns>
-                                    <TableColumn fx:id="stockShiftIdCol" prefWidth="51.33331298828125" text="Shift ID" />
-                                    <TableColumn fx:id="stockStaffNameCol" prefWidth="112.66668701171875" text="Stock Controller" />
-                                    <TableColumn fx:id="stockStartTimeCol" prefWidth="84.66665649414062" text="Starting Time" />
-                                    <TableColumn fx:id="stockCloseTimeCol" prefWidth="80.66668701171875" text="Closing Time" />
-                                    <TableColumn fx:id="startStockCol" prefWidth="72.0" text="Start Stock" />
-                                    <TableColumn fx:id="endStockCol" prefWidth="84.66668701171875" text="End Stock" />
-                                    <TableColumn fx:id="stockFlagCol" prefWidth="74.0" text="Status" />
-                                 </columns>
-                              </TableView>
-                           </children>
-                        </AnchorPane>
-                  </content>
-                </Tab>
-              </tabs>
-            </TabPane>
-         </children>
-      </VBox>
+<StackPane xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.sokalo.controller.ShiftsController"
+            stylesheets="@style.css"
+            styleClass="root">
+    <padding>
+        <Insets top="16" right="16" bottom="16" left="16"/>
+    </padding>
+    <children>
+        <BorderPane>
+         <top>
+            <HBox spacing="12.0" BorderPane.alignment="CENTER"
+                  style="-fx-background-color: -fx-dark-surface; -fx-padding: 12; -fx-background-radius: 12; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.35), 16, 0.2, 0, 6);">
+               <children>
+                  <Button fx:id="printShiftsButton" mnemonicParsing="false" onAction="#handleShiftsReport" text="Print Report" />
+               </children>
+               <padding>
+                  <Insets top="8.0" right="8.0" bottom="8.0" left="8.0" />
+               </padding>
+            </HBox>
+         </top>
+         <center>
+            <VBox spacing="16" style="-fx-background-color: -fx-dark-surface; -fx-padding: 16; -fx-background-radius: 12;" BorderPane.alignment="CENTER">
+                <TabPane tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS" style="-fx-background-color: transparent;">
+                   <tabs>
+                      <Tab text="Cashier Shifts">
+                         <content>
+                            <TableView fx:id="cashierShiftsTableView">
+                               <columns>
+                                  <TableColumn fx:id="cashShiftIdCol" text="Shift ID" minWidth="80" prefWidth="100"/>
+                                  <TableColumn fx:id="cashStaffNameCol" text="Cashier" minWidth="150" prefWidth="200"/>
+                                  <TableColumn fx:id="cashStartTimeCol" text="Starting Time" minWidth="150" prefWidth="180"/>
+                                  <TableColumn fx:id="cashCloseTimeCol" text="Closing Time" minWidth="150" prefWidth="180"/>
+                                  <TableColumn fx:id="openingCashCol" text="Opening Cash" minWidth="120" prefWidth="150"/>
+                                  <TableColumn fx:id="closingCashCol" text="Closing Cash" minWidth="120" prefWidth="150"/>
+                                  <TableColumn fx:id="cashFlagCol" text="Status" minWidth="80" prefWidth="100"/>
+                               </columns>
+                               <columnResizePolicy>
+                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                               </columnResizePolicy>
+                            </TableView>
+                         </content>
+                      </Tab>
+                    <Tab text="Stock Controller Shifts">
+                        <content>
+                            <TableView fx:id="stockShiftsTableView">
+                                <columns>
+                              <TableColumn fx:id="stockShiftIdCol" text="Shift ID" />
+                              <TableColumn fx:id="stockStaffNameCol" text="Stock Controller" />
+                              <TableColumn fx:id="stockStartTimeCol" text="Starting Time" />
+                              <TableColumn fx:id="stockCloseTimeCol" text="Closing Time" />
+                              <TableColumn fx:id="startStockCol" text="Start Stock" />
+                              <TableColumn fx:id="endStockCol" text="End Stock" />
+                              <TableColumn fx:id="stockFlagCol" text="Status" />
+                             </columns>
+                            </TableView>
+                         </content>
+                     </Tab>
+                    </tabs>
+                </TabPane>
+            </VBox>
+         </center>
+      </BorderPane>
    </children>
-</AnchorPane>
+</StackPane>

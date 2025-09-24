@@ -35,17 +35,70 @@
 /* Style Tables */
 .table-view {
     -fx-background-color: -fx-dark-surface;
+    -fx-background-radius: 8;
 }
 
 .table-view .column-header-background {
     -fx-background-color: -fx-dark-bg;
+    -fx-background-radius: 8 8 0 0;
 }
 
 .table-view .column-header .label {
     -fx-text-fill: -fx-dark-muted;
+    -fx-font-weight: bold;
 }
 
-.table-view .table-cell{
+.table-view .table-cell {
     -fx-text-fill: -fx-dark-text;
     -fx-border-color: transparent;
+    -fx-padding: 8;
+}
+
+.table-view .table-row-cell {
+    -fx-background-color: transparent;
+}
+
+.table-view .table-row-cell:selected {
+    -fx-background-color: derive(-fx-primary, -40%);
+}
+
+/* Style text fields */
+.text-field {
+    -fx-background-color: -fx-dark-surface;
+    -fx-text-fill: -fx-dark-text;
+    -fx-prompt-text-fill: -fx-dark-muted;
+    -fx-background-radius: 8;
+    -fx-padding: 8;
+}
+
+/* Style TabPane */
+.tab-pane {
+    -fx-background-color: transparent;
+}
+
+.tab-pane .tab-header-area {
+    -fx-background-color: transparent;
+}
+
+.tab-pane .tab {
+    -fx-background-color: -fx-dark-surface;
+    -fx-background-radius: 8 8 0 0;
+}
+
+.tab-pane .tab:selected {
+    -fx-background-color: -fx-primary;
+}
+
+.tab-pane .tab-label {
+    -fx-text-fill: -fx-dark-text;
+}
+
+/* Make containers responsive */
+.stack-pane, .border-pane, .anchor-pane {
+    -fx-min-width: 0;
+    -fx-min-height: 0;
+    -fx-pref-width: USE_COMPUTED_SIZE;
+    -fx-pref-height: USE_COMPUTED_SIZE;
+    -fx-max-width: Infinity;
+    -fx-max-height: Infinity;
 }

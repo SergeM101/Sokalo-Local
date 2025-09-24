@@ -43,9 +43,17 @@ public class StaffController {
 
     public StaffController() {
         this.staffMemberDAO = new StaffMemberDAO(); // Create an instance of the DAO
-        this.systemLogDAO.addLog(currentUser.getStaffMemberID(), "STAFF_CONTROLLER_INIT", "StaffController initialized.");
     }
 
+/*    public void initData(StaffMember currentUser) {
+        // Only log if a currentUser has been initialized via initData(...)
+        if (currentUser != null) {
+            this.systemLogDAO.addLog(currentUser.getStaffMemberID(), "STAFF_CONTROLLER_INIT", "StaffController initialized.");
+        }
+        // Now that we have the user, it is safe to load the data.
+        loadStaffData();
+    }
+*/
     /**
      * This method is called automatically when the FXML is loaded.
      * It sets up the table columns to display the correct data.
@@ -55,6 +63,9 @@ public class StaffController {
         idColumn.setCellValueFactory(new PropertyValueFactory<>("staffMemberID"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("fullName"));
         roleColumn.setCellValueFactory(new PropertyValueFactory<>("role"));
+        if (currentUser != null) {
+            this.systemLogDAO.addLog(currentUser.getStaffMemberID(), "STAFF_CONTROLLER_INIT", "StaffController initialized.");
+        } // Do not log without a currentUser to avoid NullPointerException
 
         // --- Setup for the custom "Actions" column ---
         Callback<TableColumn<StaffMember, Void>, TableCell<StaffMember, Void>> cellFactory = new Callback<>() {
@@ -71,7 +82,9 @@ public class StaffController {
                             System.out.println("Deleting staff: " + staffMember.getFullName());
                             // Log the action BEFORE deleting
                             String details = "Store Manager deleted staff member: " + staffMember.getFullName() + " (ID: " + staffMember.getStaffMemberID() + ")";
-                            systemLogDAO.addLog(currentUser.getStaffMemberID(), "DELETE_STAFF", details);
+                            if (currentUser != null) {
+                                systemLogDAO.addLog(currentUser.getStaffMemberID(), "DELETE_STAFF", details);
+                            }
 
                             // Call the DAO to delete it from the database
                             staffMemberDAO.deleteStaffMember(staffMember.getStaffMemberID());
@@ -126,4 +139,5 @@ public class StaffController {
             e.printStackTrace();
         }
     }
+
 }
