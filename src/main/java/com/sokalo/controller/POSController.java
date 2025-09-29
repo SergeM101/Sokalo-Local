@@ -111,6 +111,10 @@ public class POSController {
         totalLabel.setText(String.format("%.2f FCFA", total));
     }
 
+    public void initData(StaffMember currentUser) {
+
+    }
+
     // A helper "wrapper" class to make TableView display data correctly
     public static class SaleItemWrapper {
         private final SimpleIntegerProperty itemID;

@@ -23,7 +23,7 @@ import java.io.IOException;
 public class MainController {
 
     @FXML private BorderPane mainPane;
-    @FXML private Button dashboardButton, posButton, inventoryButton, staffButton, shiftsButton, adjustmentsButton, aboutUsButton, endShiftButton;
+    @FXML private Button dashboardButton, posButton, inventoryButton, staffButton, shiftsButton, adjustmentsButton, systemLogButton, aboutUsButton, endShiftButton;
 
     private StaffMember currentUser;
     private final ShiftDAO shiftDAO = new ShiftDAO(); // <-- ADD THIS DAO INSTANCE
@@ -42,6 +42,7 @@ public class MainController {
         staffButton.setVisible(false);
         shiftsButton.setVisible(false);
         adjustmentsButton.setVisible(false);
+        systemLogButton.setVisible(false);
         aboutUsButton.setVisible(false);
         endShiftButton.setVisible(false);
 
@@ -68,6 +69,7 @@ public class MainController {
                 shiftsButton.setVisible(true);
                 adjustmentsButton.setVisible(true);
                 inventoryButton.setVisible(true);
+                systemLogButton.setVisible(true);
                 aboutUsButton.setVisible(true);
                 endShiftButton.setVisible(true);
                 endShiftButton.setText("Logout");
@@ -109,34 +111,55 @@ public class MainController {
 
     @FXML void handleAboutUsClick(ActionEvent event) { loadView("AboutUsView.fxml");}
 
-    @FXML
-    void handleEndShiftClick(ActionEvent event) {
+    @FXML void handlesystemLogsClick (ActionEvent actionEvent) {
+        // First, check if a user is actually logged in.
+        if (currentUser == null) {
+            System.out.println("Error: No user is logged in.");
+            return;
+        }
+
+        // Action for Store Manager: Logout
         if (currentUser.getRole() == StaffRole.STORE_MANAGER) {
             closeAndReturnToLogin();
-        } else {
+        }
+        // Action for Cashier or Stock Controller: Open End Shift Dialog
+        else {
             try {
                 Shift activeShift = shiftDAO.findActiveShiftForUser(currentUser.getStaffMemberID());
                 if (activeShift == null) {
-                    System.out.println("Error: No active shift found for this user.");
+                    System.out.println("Error: No active shift found for this user to end.");
+                    // Optionally show an Alert to the user
                     return;
                 }
 
+                // Load the EndShiftView as a pop-up dialog
                 FXMLLoader loader = new FXMLLoader(Main.class.getResource("/com/sokalo/view/EndShiftView.fxml"));
                 Stage dialogStage = new Stage();
                 dialogStage.setTitle("End Shift");
                 dialogStage.initModality(Modality.WINDOW_MODAL);
+                dialogStage.initOwner((Stage) mainPane.getScene().getWindow()); // Set owner window
                 dialogStage.setScene(new Scene(loader.load()));
 
+                // Pass the necessary data to the EndShiftController
                 EndShiftController controller = loader.getController();
                 controller.initData(currentUser, activeShift);
 
+                // Show the dialog and wait for it to be closed
                 dialogStage.showAndWait();
-                closeAndReturnToLogin();
+
+                // After the dialog is closed, the main window will also close and return to login.
+                // The closeAndReturnToLogin() is called from within the EndShiftController.
+                Stage mainStage = (Stage) mainPane.getScene().getWindow();
+                mainStage.close();
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
     }
+
+    @FXML
+    void handleEndShiftClick(ActionEvent event) { loadView("EndShiftView.fxml");}
 
     private void loadView(String fxmlFile) {
         loadView(fxmlFile, false);
@@ -146,22 +169,26 @@ public class MainController {
         try {
             FXMLLoader loader = new FXMLLoader(Main.class.getResource("/com/sokalo/view/" + fxmlFile));
             Pane view = loader.load();
+
+            // After loading, get the controller and pass the data
             if (needsUserData) {
                 Object controller = loader.getController();
-                if (controller instanceof InventoryController) {
-                    ((InventoryController) controller).initData(currentUser);
-                }// --- ADD THIS ELSE IF BLOCK ---
-
- /*               else if (controller instanceof StaffController) {
+                if (controller instanceof StaffController) {
                     ((StaffController) controller).initData(currentUser);
+                } else if (controller instanceof InventoryController) {
+                    ((InventoryController) controller).initData(currentUser);
+                } else if (controller instanceof POSController) {
+                    ((POSController) controller).initData(currentUser);
+                } else if (controller instanceof DashboardController) {
+                    ((DashboardController) controller).initData(currentUser);
                 }
-
-  */
             }
+
             mainPane.setCenter(view);
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 
     private void closeAndReturnToLogin() {

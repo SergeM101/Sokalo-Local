@@ -36,6 +36,12 @@ public class AddStaffDialogController {
         this.staffController = staffController;
     }
 
+    // This method receives data from the StaffController
+    public void initData(StaffMember currentUser, StaffController staffController) {
+        this.currentUser = currentUser;
+        this.staffController = staffController;
+    }
+
     @FXML
     public void initialize() {
         // Populate the role ComboBox with values from the StaffRole enum

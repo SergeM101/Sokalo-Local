@@ -14,47 +14,51 @@
            fx:controller="com.sokalo.controller.MainController"
            stylesheets="@style.css"
            styleClass="root">
-   <children>
-      <BorderPane fx:id="mainPane">
+    <BorderPane fx:id="mainPane">
 
-         <!-- Full-width header with logo -->
+        <!-- Full-width header with logo -->
 
-         <!-- Left navigation (kept fx:id) -->
-         <left>
-            <ScrollPane fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED" BorderPane.alignment="CENTER"
-                        style="-fx-background-color: transparent; -fx-background-insets: 0;" >
-               <content>
-                  <VBox spacing="10.0" alignment="CENTER"
-                        style="-fx-background-color: -fx-dark-surface; -fx-padding: 16; -fx-background-radius: 12; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.35), 16, 0.2, 0, 6);">
-                     <children>
-                        <Button fx:id="dashboardButton" mnemonicParsing="false" onAction="#handleDashboardClick" text="Dashboard" maxWidth="Infinity" />
-                        <Button fx:id="posButton" mnemonicParsing="false" onAction="#handlePOSClick" text="POS" maxWidth="Infinity" />
-                        <Button fx:id="inventoryButton" mnemonicParsing="false" onAction="#handleInventoryClick" text="Inventory" maxWidth="Infinity" />
-                        <Button fx:id="staffButton" mnemonicParsing="false" onAction="#handleStaffClick" text="Staff" maxWidth="Infinity" />
-                        <Button fx:id="shiftsButton" mnemonicParsing="false" onAction="#handleShiftsClick" text="Shifts" maxWidth="Infinity" />
-                        <Button fx:id="adjustmentsButton" mnemonicParsing="false" onAction="#handleAdjustmentsClick" text="Adjustments Log" maxWidth="Infinity" />
-                        <Button fx:id="aboutUsButton" mnemonicParsing="false" onAction="#handleAboutUsClick" text="About Us" maxWidth="Infinity" />
-                        <Button fx:id="endShiftButton" mnemonicParsing="false" onAction="#handleEndShiftClick" text="End/End Shift" maxWidth="Infinity" />
-                     </children>
-                  </VBox>
-               </content>
+        <!-- Left navigation (kept fx:id) -->
+        <left>
+            <ScrollPane fitToWidth="true" hbarPolicy="NEVER" BorderPane.alignment="CENTER"
+                        style="-fx-background-color: transparent; -fx-background-insets: 0;">
+                <VBox spacing="10.0" alignment="CENTER"
+                      style="-fx-background-color: -fx-dark-surface; -fx-padding: 16; -fx-background-radius: 12; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.35), 16, 0.2, 0, 6);">
+                    <Button fx:id="dashboardButton" mnemonicParsing="false" onAction="#handleDashboardClick"
+                            text="Dashboard" maxWidth="Infinity"/>
+                    <Button fx:id="posButton" mnemonicParsing="false" onAction="#handlePOSClick" text="POS"
+                            maxWidth="Infinity"/>
+                    <Button fx:id="inventoryButton" mnemonicParsing="false" onAction="#handleInventoryClick"
+                            text="Inventory" maxWidth="Infinity"/>
+                    <Button fx:id="staffButton" mnemonicParsing="false" onAction="#handleStaffClick" text="Staff"
+                            maxWidth="Infinity"/>
+                    <Button fx:id="shiftsButton" mnemonicParsing="false" onAction="#handleShiftsClick" text="Shifts"
+                            maxWidth="Infinity"/>
+                    <Button fx:id="adjustmentsButton" mnemonicParsing="false" onAction="#handleAdjustmentsClick"
+                            text="Adjustments Log" maxWidth="Infinity"/>
+                    <Button fx:id="systemLogButton" mnemonicParsing="false" onAction="#handlesystemLogsClick"
+                            text="Adjustments Log" maxWidth="Infinity"/>
+                    <Button fx:id="aboutUsButton" mnemonicParsing="false" onAction="#handleAboutUsClick"
+                            text="About Us" maxWidth="Infinity"/>
+                    <Button fx:id="endShiftButton" mnemonicParsing="false" onAction="#handleEndShiftClick"
+                            text="End/End Shift" maxWidth="Infinity"/>
+                </VBox>
             </ScrollPane>
-         </left>
+        </left>
 
-         <!-- Main content area -->
-         <center>
-            <StackPane BorderPane.alignment="CENTER" style="-fx-background-color: transparent;">
-                <padding>
-                    <Insets top="16" right="16" bottom="16" left="16"/>
-                </padding>
-                <AnchorPane style="-fx-background-color: -fx-dark-surface; -fx-background-radius: 12;">
-                    <padding>
-                        <Insets top="16" right="16" bottom="16" left="16"/>
-                    </padding>
-                    <VBox.vgrow>ALWAYS</VBox.vgrow>
-                </AnchorPane>
-            </StackPane>
-         </center>
-      </BorderPane>
-   </children>
+        <!-- Main content area -->
+        <center>
+          <StackPane BorderPane.alignment="CENTER" style="-fx-background-color: transparent;">
+              <padding>
+                  <Insets top="16" right="16" bottom="16" left="16"/>
+              </padding>
+              <AnchorPane style="-fx-background-color: -fx-dark-surface; -fx-background-radius: 12;">
+                  <padding>
+                      <Insets top="16" right="16" bottom="16" left="16"/>
+                  </padding>
+                  <VBox.vgrow>ALWAYS</VBox.vgrow>
+              </AnchorPane>
+          </StackPane>
+        </center>
+    </BorderPane>
 </StackPane>

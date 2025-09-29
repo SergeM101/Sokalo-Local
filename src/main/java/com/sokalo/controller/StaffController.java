@@ -22,18 +22,12 @@ import javafx.util.Callback;
 
 public class StaffController {
 
-    @FXML
-    private Button addStaffButton;
-    @FXML
-    private TableColumn<StaffMember, Void> actionColumn;
-    @FXML
-    private TableView<StaffMember> staffTableView;
-    @FXML
-    private TableColumn<StaffMember, Integer> idColumn;
-    @FXML
-    private TableColumn<StaffMember, String> nameColumn;
-    @FXML
-    private TableColumn<StaffMember, String> roleColumn;
+    @FXML private Button addStaffButton;
+    @FXML private TableColumn<StaffMember, Void> actionColumn;
+    @FXML private TableView<StaffMember> staffTableView;
+    @FXML private TableColumn<StaffMember, Integer> idColumn;
+    @FXML private TableColumn<StaffMember, String> nameColumn;
+    @FXML private TableColumn<StaffMember, String> roleColumn;
 
     // A list to hold the data for the table
     private ObservableList<StaffMember> staffList = FXCollections.observableArrayList();
@@ -45,15 +39,12 @@ public class StaffController {
         this.staffMemberDAO = new StaffMemberDAO(); // Create an instance of the DAO
     }
 
-/*    public void initData(StaffMember currentUser) {
-        // Only log if a currentUser has been initialized via initData(...)
-        if (currentUser != null) {
-            this.systemLogDAO.addLog(currentUser.getStaffMemberID(), "STAFF_CONTROLLER_INIT", "StaffController initialized.");
-        }
-        // Now that we have the user, it is safe to load the data.
+    // This method receives the data from MainController
+    public void initData(StaffMember currentUser) {
+        this.currentUser = currentUser;
+        // Now it's safe to load data
         loadStaffData();
     }
-*/
     /**
      * This method is called automatically when the FXML is loaded.
      * It sets up the table columns to display the correct data.
